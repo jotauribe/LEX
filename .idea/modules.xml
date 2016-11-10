@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lex-core.iml" filepath="$PROJECT_DIR$/.idea/modules/lex-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lex-core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/lex-core_main.iml" group="lex-core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lex-core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/lex-core_test.iml" group="lex-core" />
+    </modules>
+  </component>
+</project>

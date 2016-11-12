@@ -1,8 +1,5 @@
-package co.lex.domain.model.lexicon.analizer;
+package co.lex.domain.model.lexicon.analysis;
 
-import com.sun.javafx.fxml.expression.Expression;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -10,8 +7,6 @@ import org.junit.runners.Parameterized.Parameters;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by jotauribe on 10/11/16.

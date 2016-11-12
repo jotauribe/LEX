@@ -1,4 +1,4 @@
-package co.lex.domain.model.lexicon.analizer;
+package co.lex.domain.model.lexicon.analysis;
 
 import java.util.regex.Pattern;
 

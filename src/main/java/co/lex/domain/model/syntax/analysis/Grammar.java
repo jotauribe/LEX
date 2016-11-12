@@ -1,9 +1,13 @@
 package co.lex.domain.model.syntax.analysis;
 
+import java.util.List;
+
 /**
  * Created by jotauribe on 10/11/16.
  */
 public class Grammar {
+
+    private List<ProductionRule> productionRules;
 
     /**
      *
@@ -12,7 +16,7 @@ public class Grammar {
      * <VARIABLE>                   =   <VARIABLE> "[" [INTEGER] "]" | [IDENTIFIER]
      *
      * <STATEMENT>                  =   <BLOCK> <STATEMENT> | <STATEMENT> <BLOCK> | <BLOCK>
-     * <BLOCK>                      =   <IF> | <SWITCH> | <FOR> | <WHILE> | <DO-WHILE> | <FIELD-DECLARATION> | <ASSIGNMENT>
+     * <BLOCK>                      =   <FIELD-DECLARATION> | <ASSIGNMENT> | <IF> | <SWITCH> | <FOR> | <WHILE> | <DO-WHILE>
      *
      * <EXPRESSION>                 =   <EXPRESSION> [MATH-OPERATOR] <EXPRESSION> | <EXPRESSION-GROUP> | <VARIABLE> | <VALUE>
      * <EXPRESSION-GROUP>           =   "(" <EXPRESSION> ")"
@@ -23,8 +27,6 @@ public class Grammar {
      * <VARIABLE-DECLARATOR>        =   <VARIABLE-DECLARATOR-ID> | <VARIABLE-DECLARATOR-ID> "=" <INITIALIZER>
      * <VARIABLE-DECLARATOR-ID>     =   [IDENTIFIER] | <VARIABLE-DECLARATOR-ID> "[" "]"
      * <INITIALIZER>                =   <EXPRESSION> | <ARRAY-INITIALIZER>
-     *
-     *
      * <ARRAY-INITIALIZER>          =   [IDENTIFIER] | "{" <ARRAY-ELEMENT-GROUP> "}"
      * <ARRAY-ELEMENT-GROUP>        =   <ARRAY-ELEMENT> "," "{" <ARRAY-ELEMENT-GROUP> "}" | "{" <ARRAY-ELEMENT-GROUP> "}" "," <ARRAY-ELEMENT> | <ARRAY-ELEMENT>
      * <ARRAY-ELEMENT>              =   <VARIABLE> | [VALUE]

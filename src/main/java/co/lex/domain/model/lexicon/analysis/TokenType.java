@@ -23,6 +23,10 @@ public enum TokenType {
 
     VALUE_STRING("[\"]([\\w]|[ñ]|\\s)+[\"]", TokenType.DEFAULT_PRIORITY_INDEX),
 
+    VALUE_BOOLEAN_TRUE("cierto", TokenType.MAX_PRIORITY_INDEX),
+
+    VALUE_BOOLEAN_FALSE("falso", TokenType.MAX_PRIORITY_INDEX),
+
     MATH_OPERATOR("(\\+|-|\\*|\\\\)", TokenType.DEFAULT_PRIORITY_INDEX),
 
     ASSIGNMENT_OPERATOR("=", TokenType.DEFAULT_PRIORITY_INDEX),
@@ -49,9 +53,7 @@ public enum TokenType {
 
     RW_DATATYPE_REAL("real", TokenType.MAX_PRIORITY_INDEX),
 
-    RW_DATATYPE_BOOLEAN_TRUE("cierto", TokenType.MAX_PRIORITY_INDEX),
-
-    RW_DATATYPE_BOOLEAN_FALSE("falso", TokenType.MAX_PRIORITY_INDEX),
+    RW_DATATYPE_BOOLEAN("logico", TokenType.MAX_PRIORITY_INDEX),
 
     //CONTROL STRUCTURES TOKEN TYPES
 

@@ -56,7 +56,6 @@ public class Analyzer {
                 errorFlag = false;
                 String tempMatchedString = m.group();
                 if( tempMatchedString.length() >= matchedString.length()
-                        //TEST STATE FIX PROVIDED AND TESTED This depend on the order of the TokenTypes HAVE TO FIX
                         && currentTokenType.priorityIndex() >= matchedTokenType.priorityIndex()){
                     matchedString = tempMatchedString;
                     matchedTokenType = currentTokenType;

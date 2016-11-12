@@ -34,13 +34,13 @@ public class Grammar {
      * <ASSIGNMENT>                 =   <VARIABLE> "=" <EXPRESSION>
      *
      *
-     * <IF>                         =   "SI" "(" <CONDITION> ")" "{" <STATEMENT> <IF-OPTIONAL-STRUCTURE> "}" <IF-END>
+     * <IF>                         =   "SI" "(" <CONDITION> ")" "{" <STATEMENT> "}" <IF-OPTIONAL-STRUCTURE> <IF-END>
      * <IF-OPTIONAL-STRUCTURE>      =   <ELSE> | [EMPTY]
      * <ELSE>                       =   "SINO" "{" <STATEMENT> "}"
      *
      *
      * <SWITCH>                     =   "SEGUN" [IDENTIFIER] ":" <SWITCH-BODY> [SWITCH-END]
-     * <SWITCH-BODY>                =   <SWITCH-CASE-GROUP> <SWITCH-CASE-GROUP> | <SWITCH-OPTIONAL-STRUCTURE> <SWITCH-CASE-GROUP>
+     * <SWITCH-BODY>                =   <SWITCH-CASE-GROUP> <SWITCH-CASE-OPTIONAL-STRUCTURE> | <SWITCH-OPTIONAL-STRUCTURE> <SWITCH-CASE-GROUP>
      * <SWITCH-CASE-GROUP>          =   <SWITCH-CASE-GROUP> <SWITCH-CASE> | <SWITCH-CASE>
      * <SWITCH-CASE>                =   "CASO" <VALUE> ":" <STATEMENT>
      * <SWITCH-OPTIONAL-STRUCTURE>  =   "HACER-SIEMPRE" ":" <STATEMENT> | [EMPTY]
@@ -65,7 +65,11 @@ public class Grammar {
      *
      * <FUNCTION-CALL>              =   [IDENTIFIER] "(" <ARGUMENT-GROUP> ")"
      * <ARGUMENT-GROUP>             =   <ARGUMENT> <ARGUMENT-GROUP> | <ARGUMENT>
-     *
+     * <ARGUMENT>                   =   [IDENTIFIER] | <VALUE>
      */
+
+    public Grammar(){
+
+    }
 
 }

@@ -15,7 +15,7 @@ public enum TokenType {
 
     COLON(":", TokenType.DEFAULT_PRIORITY_INDEX),
 
-    IDENTIFIER("[a-zA-Zñ]([\\w]|[ñ])+", TokenType.DEFAULT_PRIORITY_INDEX),
+    IDENTIFIER("[a-zA-Zñ]([\\w]|[ñ])*", TokenType.DEFAULT_PRIORITY_INDEX), //PEVIOUS PATTERN "[a-zA-Zñ]([\w]|[ñ])+"
 
     VALUE_INTEGER("([\\d])+", TokenType.DEFAULT_PRIORITY_INDEX), //PREVIOUS PATTERN "-?([\\d])+"
 
@@ -31,7 +31,7 @@ public enum TokenType {
 
     ASSIGNMENT_OPERATOR("=", TokenType.DEFAULT_PRIORITY_INDEX),
 
-    LOGICAL_OPERATOR("(\\||&|==|!=)", TokenType.DEFAULT_PRIORITY_INDEX),
+    LOGICAL_OPERATOR("(\\||&|==|!=|<|<=|>|>=)", TokenType.DEFAULT_PRIORITY_INDEX),//PREVIOUS PATTTERN "(\\||&|==|!=)"
 
     GROUPER_BRACKET_LEFT("\\[", TokenType.DEFAULT_PRIORITY_INDEX),
 

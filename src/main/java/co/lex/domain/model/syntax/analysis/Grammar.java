@@ -16,7 +16,7 @@ public class Grammar {
      * <VARIABLE>                   =   <VARIABLE> "[" [INTEGER] "]" | [IDENTIFIER]
      *
      * <STATEMENT>                  =   <BLOCK> <STATEMENT> | <STATEMENT> <BLOCK> | <BLOCK>
-     * <BLOCK>                      =   <FIELD-DECLARATION> | <ASSIGNMENT> | <IF> | <SWITCH> | <FOR> | <WHILE> | <DO-WHILE>
+     * <BLOCK>                      =   <FIELD-DECLARATION> | <ASSIGNMENT> | <IF> | <SWITCH> | <FOR> | <WHILE> | <DO-WHILE> | <READ> | <WRITE>
      *
      * <EXPRESSION>                 =   <EXPRESSION> [MATH-OPERATOR] <EXPRESSION> | <EXPRESSION-GROUP> | <VARIABLE> | <VALUE>
      * <EXPRESSION-GROUP>           =   "(" <EXPRESSION> ")"
@@ -66,6 +66,8 @@ public class Grammar {
      * <FUNCTION-CALL>              =   [IDENTIFIER] "(" <ARGUMENT-GROUP> ")"
      * <ARGUMENT-GROUP>             =   <ARGUMENT> <ARGUMENT-GROUP> | <ARGUMENT>
      * <ARGUMENT>                   =   [IDENTIFIER] | <VALUE>
+     * <READ>                       =   "LEER" <VARIABLE>
+     * <WRITE>                      =  "ESCRIBIR" <VARIABLE>     | <VALUE>
      */
 
     public Grammar(){

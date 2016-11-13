@@ -107,6 +107,38 @@ public class AnalyzerTest {
         Object[] objectsSet4 = new Object[]{expected4, suppliedString4};
         parameters.add(objectsSet4);
 
+        ////////////////////////////////////////////////////////////////////////////
+
+        //5to set
+        List<Token> expected5 = new ArrayList<>();
+        expected5.add(new Token(TokenType.RW_CONTROLSTRUCTURE_ITERATIVE_FOR, "para"));
+        expected5.add(new Token(TokenType.GROUPER_PARENTHESES_LEFT, "("));
+        expected5.add(new Token(TokenType.RW_DATATYPE_INTEGER, "entero"));
+        expected5.add(new Token(TokenType.WHITESPACE, " "));
+        expected5.add(new Token(TokenType.IDENTIFIER, "i"));
+        expected5.add(new Token(TokenType.WHITESPACE, " "));
+        expected5.add(new Token(TokenType.ASSIGNMENT_OPERATOR, "="));
+        expected5.add(new Token(TokenType.WHITESPACE, " "));
+        expected5.add(new Token(TokenType.VALUE_INTEGER, "0"));
+        expected5.add(new Token(TokenType.END_OF_STATEMENT, ";"));
+        expected5.add(new Token(TokenType.WHITESPACE, " "));
+        expected5.add(new Token(TokenType.IDENTIFIER, "i"));
+        expected5.add(new Token(TokenType.WHITESPACE, " "));
+        expected5.add(new Token(TokenType.LOGICAL_OPERATOR, "<"));
+        expected5.add(new Token(TokenType.WHITESPACE, " "));
+        expected5.add(new Token(TokenType.VALUE_INTEGER, "10"));
+        expected5.add(new Token(TokenType.END_OF_STATEMENT, ";"));
+        expected5.add(new Token(TokenType.WHITESPACE, " "));
+        expected5.add(new Token(TokenType.IDENTIFIER, "i"));
+        expected5.add(new Token(TokenType.MATH_OPERATOR, "+"));
+        expected5.add(new Token(TokenType.MATH_OPERATOR, "+"));
+        expected5.add(new Token(TokenType.GROUPER_PARENTHESES_RIGHT, ")"));
+
+        String suppliedString5 = "para(entero i = 0; i < 10; i++)";
+
+        Object[] objectsSet5 = new Object[]{expected5, suppliedString5};
+        parameters.add(objectsSet4);
+
 
         return parameters;
     }

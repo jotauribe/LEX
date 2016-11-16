@@ -12,9 +12,18 @@ public class Token {
 
     private String word;
 
+    private int position;
+
+    private int normalizedPosition;
+
+    private Token nextToken;
+
+    private Token previousToken;
+
     public Token(TokenType aTokenType, String aAllowedWord){
-        this.tokenType = aTokenType;
+        this.setTokenType(aTokenType);
         this.setWord(aAllowedWord);
+
     }
 
     private void setWord(String aAllowedWord){
@@ -31,7 +40,7 @@ public class Token {
         if(aTokenType == null){
             throw  new IllegalArgumentException("TokenType can not be null");
         }
-
+        this.tokenType = aTokenType;
     }
 
     private Matcher getMatcher(String aWord){
@@ -49,6 +58,48 @@ public class Token {
 
     public TokenType tokenType(){
         return this.tokenType;
+    }
+
+    public Token nextToken(){
+        return this.nextToken;
+    }
+
+    public int position(){
+        return this.position;
+    }
+
+    public int normalizedPosition(){
+        return this.normalizedPosition;
+    }
+
+    public Token previousToken(){
+        return this.previousToken;
+    }
+
+    public void setNextToken(Token aToken){
+        this.nextToken = aToken;
+    }
+
+    public void setPreviousToken(Token aToken){
+        this.previousToken = aToken;
+    }
+
+    public void setPosition(int aPosition){
+        if(this.previousToken != null){
+            if(aPosition <= this.previousToken().position()){
+                throw new IllegalArgumentException("An illegal position was provided. Position can not be smaller than previous Token position");
+            }
+        }
+        this.position = aPosition;
+    }
+
+    public void setNormalizedPosition(int aPosition) {
+        if (this.previousToken != null) {
+            if (aPosition <= this.previousToken().normalizedPosition()) {
+                throw new IllegalArgumentException("An illegal position was provided. Position can not be smaller than previous Token position");
+            }
+        }
+        this.normalizedPosition = aPosition;
     }
 
     @Override

@@ -25,7 +25,7 @@ public class Analyzer {
      * @param aString the analyzed String
      * @return a token list
      */
-    public List<Token> parse(String aString){
+    public List<Token> tokenize(String aString){
 
         latestGeneratedTokens.clear();
 
@@ -34,6 +34,8 @@ public class Analyzer {
         while (tempString.length()>0){
             tempString = nextMatch(tempString);
         }
+
+        this.linkTokens();
 
         return latestGeneratedTokens;
     }
@@ -66,6 +68,36 @@ public class Analyzer {
         latestGeneratedTokens.add( new Token(matchedTokenType, matchedString) );
 
         return aString.substring(matchedString.length());
+    }
+
+    private void linkTokens(){
+        latestGeneratedTokens = getNormalizedTokenList(latestGeneratedTokens);
+        for(int i = 0; i < this.latestGeneratedTokens.size()-1; i++){
+            if(this.latestGeneratedTokens.get(i+1) != null){
+                latestGeneratedTokens.get(i).setNextToken(latestGeneratedTokens.get(i+1));
+                this.latestGeneratedTokens.get(i+1).setPreviousToken(this.latestGeneratedTokens.get(i));// TODO
+
+            }
+
+        }
+
+        for (int i = 0; i < latestGeneratedTokens.size(); i++){
+            this.latestGeneratedTokens.get(i).setPosition(i);
+            ;
+        }
+    }
+
+
+    //TODO implement method
+    private List<Token> getNormalizedTokenList(List<Token> aLinkedTokenList){
+        List<Token> normalizedTokenList = new ArrayList<>();
+        for(int i = 0; i < latestGeneratedTokens.size(); i++){
+            if(latestGeneratedTokens.get(i).tokenType() != TokenType.WHITESPACE){
+                normalizedTokenList.add(latestGeneratedTokens.get(i));
+            }
+        }
+
+        return normalizedTokenList;
     }
 
 }

@@ -3,12 +3,12 @@ package co.lex.domain.model.syntax.analysis;
 import co.lex.domain.model.lexicon.analysis.Token;
 
 /**
- * Created by RMC on 12/11/2016.
+ * Created by jotauribe on 13/11/16.
  */
-public interface ProductionRule {
+public interface Symbol {
 
     public Sentence evaluate(Token aToken);
 
-    public String name();
+
 
 }

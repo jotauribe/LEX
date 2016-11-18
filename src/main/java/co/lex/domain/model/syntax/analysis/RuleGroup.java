@@ -37,8 +37,10 @@ public class RuleGroup implements ProductionRule{
 
     public Sentence evaluate(Token aToken) {
 
+        Token previousToken = aToken.previousToken();
         Token currentToken = aToken;
         Token endToken = aToken;
+        Token lastValidToken = aToken;
         Sentence childSentence = null;
         Boolean flag = false;
 
@@ -47,8 +49,7 @@ public class RuleGroup implements ProductionRule{
             Token tempToken = aToken;
 
             Sentence ts = r.evaluate(tempToken);
-            //System.out.print("\nFROM RULEGROUP AFTER EVALUATE : " +this.name()+" : "+ts.length());
-            //System.out.print("\nFROM RULEGROUP : "+ts.endToken());
+            System.out.print("\n-----------FROM RULEGROUP "+ this.name()+" LASTVALID TOKEN "+ts.lastValidToken()+"\n");
 
             if(ts.length() > 0){
                 flag = true;
@@ -57,23 +58,28 @@ public class RuleGroup implements ProductionRule{
                     endToken = ts.endToken();
                 }
                 else {
-                    if(childSentence.length() < ts.length()){ //TODO Revisar conveniencia de la comparacion <= o <
+                    if(childSentence.length() < ts.length()){
                         childSentence = ts;
                         endToken = ts.endToken();
+                    }
+                }
+            } else{ //TODO Verificar
+                if(ts.lastValidToken() != null){
+                    if(lastValidToken.position() < ts.lastValidToken().position()){
+                        lastValidToken = ts.lastValidToken();
                     }
                 }
             }
         }
 
-        if(flag){
+        if(flag ){
             Sentence s = new Sentence(aToken, endToken, this);
-            //System.out.print("\nFROM RULEGROUP : " +this.name()+" RETURN : "+s.length());
-            //System.out.print("\nFROM RULEGROUP : " +this.name()+" RETURN : "+s.endToken());
             s.addSubsentence(childSentence);
-            return childSentence; //TODO
+            return s; //TODO
         }
 
-        return new Sentence();
+        Sentence errorSentence = Sentence.errorSentence(lastValidToken);
+        return errorSentence;
     }
 
 }

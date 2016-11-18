@@ -82,7 +82,7 @@ public class Analyzer {
         }
 
         for (int i = 0; i < latestGeneratedTokens.size(); i++){
-            this.latestGeneratedTokens.get(i).setPosition(i);
+            this.latestGeneratedTokens.get(i).setPosition(i+1);
             ;
         }
     }

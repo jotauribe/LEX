@@ -22,10 +22,9 @@ public class TerminalSymbol implements Symbol, ProductionRule{
     @Override
     public Sentence evaluate(Token aToken) {
         //System.out.print("\nFROM TERMINAL SYMBOL "+aToken+"\n");
-
         //System.out.print("\nFROM TERMINAL SYMBOL "+this.tokenType.name()+" = "+aToken.type().equals(this.tokenType.name())+"\n");
         if(aToken.type().equals(this.tokenType.name())) return new Sentence(aToken, aToken, this);
-        return new Sentence();
+        return Sentence.errorSentence(aToken.previousToken());
     }
 
     @Override

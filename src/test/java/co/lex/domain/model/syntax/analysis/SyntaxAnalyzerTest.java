@@ -34,16 +34,26 @@ public class SyntaxAnalyzerTest {
         SyntaxAnalyzer sa = new SyntaxAnalyzer();
         List<Token> t = a.tokenize(suppliedString);
         Sentence s = sa.parse(t);
-        //System.out.print("\nS.SENTENCE = "+s.getTokens()+"");
+        //System.out.print("\nS.SENTENCE = "+s.length()+" ENDTOKEN: "+s.lastValidToken());
         assertEquals( expectedLenght, s.length());
 
+    }
+
+    @Test
+    public void lastValidTokenPosition(){
+        Analyzer a = new Analyzer();
+        SyntaxAnalyzer sa = new SyntaxAnalyzer();
+        List<Token> t = a.tokenize(suppliedString);
+        Sentence s = sa.parse(t);
+        System.out.print("\nS.SENTENCE = "+s.length()+" ENDTOKEN: "+s.lastValidToken());
+        assertEquals(expectedLenght, s.lastValidToken().position());
     }
 
     @Parameterized.Parameters
     public static Iterable<Object[]> parameterProvider(){
 
         List<Object[]> parameters = new ArrayList<>();
-
+        /**
         parameters.add(new Object[]{"identificador[18906][506][89]           \n[34] = a +    \n bacanoesto + whiletu", 19});
         parameters.add(new Object[]{"identificador = a +    \n bacanoesto + whiletu", 7});
         parameters.add(new Object[]{"identificador[18906] = a +    \n bacanoesto + whiletu+67+09+68", 16});
@@ -69,9 +79,14 @@ public class SyntaxAnalyzerTest {
         parameters.add(new Object[]{"mientras a < b : a = 23 segun a: Caso 4: si(a==56): mientras a< 34: a = 0 FinMientras finsi Caso 6: b = 56+ 67 FinSegun  FinMientras", 41});
         parameters.add(new Object[]{"cadena a = 34 + 45", 6});
         parameters.add(new Object[]{"cadena a ", 2});
-
-
         parameters.add(new Object[]{"segun a: Caso 4:entero a  \nHacerSiempre: a = 0 FinSegun", 14});
+        parameters.add(new Object[]{"entero ui=var, un=90))", 8});
+        parameters.add(new Object[]{"segun a: Caso 4:entero a  \nHacerSiempre: a = 0 FinSegun", 14});
+         */
+        //parameters.add(new Object[]{"segun a: Caso 4:entero a  \nHacerSiempre: = 45  0 FinSegun", 10});
+
+        parameters.add(new Object[]{"mientras a < b : cadena a b =  + 67 FinMientras", 7});
+
         return parameters;
     }
 

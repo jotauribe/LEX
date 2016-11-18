@@ -18,13 +18,36 @@ public class Sentence {
 
     private List<Sentence> subSentences;
 
+    private Boolean isBroken;
+
     public Sentence(){ }
+
+    public Sentence(Token endToken){
+        this.endToken = endToken;
+    }
 
     public Sentence(Token startToken, Token endToken, ProductionRule aRule){
         this.startToken = startToken;
         this.endToken = endToken;
         this.acceptanceRule = aRule;
         subSentences = new ArrayList<>();
+        this.isBroken = false;
+    }
+
+    public Sentence(Token startToken, Token endToken, ProductionRule aRule, Boolean isBroken){
+        this.startToken = startToken;
+        this.endToken = endToken;
+        this.acceptanceRule = aRule;
+        subSentences = new ArrayList<>();
+        this.isBroken = isBroken;
+    }
+
+    public static Sentence errorSentence(Token endToken){
+        return new Sentence(endToken);
+    }
+
+    public static Sentence brokenSentence(Token startToken, Token endToken, ProductionRule acceptanceRule){
+        return new Sentence(startToken, endToken, acceptanceRule, false);
     }
 
     public Token startToken() {
@@ -68,21 +91,40 @@ public class Sentence {
     }
 
     public int length(){
-        if((endToken == null) || (startToken == null)){
+        if((endToken == null) || (startToken == null)) {
             return 0;
+        }else {
+            if (isBroken){
+                Token tempToken = startToken;
+                int count = 0;
+                while (tempToken != null){
+                    count++;
+                    tempToken.nextToken();
+                }
+                return count;
+            }
         }
         return endToken.position() - startToken.position() + 1;
     }
 
     public List<Token> getTokens(){
         List<Token> lt = new ArrayList<>();
-        lt.add(startToken);
         Token t = startToken;
-        while(t != null){
-            t = startToken.nextToken();
+        int count = 0;
+        while(count < length()){
             lt.add(t);
+            t = t.nextToken();
+            count++;
         }
         return lt;
     }
 
+    public Sentence lastValidSentence(){
+        Sentence lastValidSentence = subSentences().get(subSentences().size() -1);
+        return lastValidSentence;
+    }
+
+    public Token lastValidToken(){
+        return endToken();
+    }
 }

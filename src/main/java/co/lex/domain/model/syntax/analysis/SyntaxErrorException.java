@@ -11,6 +11,10 @@ public class SyntaxErrorException extends Exception {
 
     public SyntaxErrorException(String message, Token token){
         super(message);
+        this.token = token;
     }
 
+    public Token getToken(){
+        return token;
+    }
 }

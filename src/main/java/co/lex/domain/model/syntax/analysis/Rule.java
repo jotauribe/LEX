@@ -1,7 +1,6 @@
 package co.lex.domain.model.syntax.analysis;
 
 import co.lex.domain.model.lexicon.analysis.Token;
-import co.lex.domain.model.lexicon.analysis.TokenType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,40 +39,37 @@ public class Rule implements ProductionRule{
     }
 
     public Sentence evaluate(Token aToken){
-
+        Token previousToken = aToken.previousToken();
         Token currentToken = aToken;
-        Token endToken2 = null;
+        Token endToken = null;
         List<Sentence> sentences = new ArrayList<>();
-        Sentence lastSentence = null;
 
         for (Symbol s : this.symbols) {
-            //System.out.print(""+"\nFROM RULE \n: Token evaluado"+currentToken+"\n evaluado por "+s.toString());
+
+            //SI LA CADENA DE TOKENS TERMINA ANTES DE ACABAR LA COMPROBACION DE LA REGLA
+            //SE RETORNA UN OBJETC DE TIPO SENTENCE CON INFORMACION SOBRE EL ULTIMO TOKEN VALIDO
             if(currentToken == null){
-                //System.out.print("\nFROM RULE "+": NO SE CUMPLE LA REGLA");
-                return new Sentence();
+                Sentence errorSentence = Sentence.errorSentence(previousToken);
+                errorSentence.setSubSentences(sentences);
+                return errorSentence;
             }
-            if(s instanceof NonTerminalSymbol){
-                //System.out.print("\nFROM RULE: ENTRADA A REGLA NO TERMINAL");
-            }
+
+            previousToken = currentToken.previousToken();
             Sentence ts = s.evaluate(currentToken);
 
             if (ts.length() > 0){
-                //System.out.print(""+"\nFROM RULE 2 : "+ts.endToken().tokenType());
                 currentToken = ts.endToken().nextToken();
-                lastSentence = ts;
-                endToken2 = ts.endToken();
+                endToken = ts.endToken();
                 if (ts.length() > 1){
                     sentences.add(ts);
                 }
             }
             else{
-                return new Sentence();
+                Sentence errorSentence = Sentence.errorSentence(ts.lastValidToken()); //TODO REVISAR
+                return errorSentence;
             }
-
         }
-        Token endToken = endToken2;
-        Sentence s = new Sentence(aToken, lastSentence.endToken(), this);
-        //System.out.print("\n================================\nFROM RULE RETURN: "+endToken.type()+" "+endToken.position());
+        Sentence s = new Sentence(aToken, endToken, this);
         s.setSubSentences(sentences);
         return s;
     }

@@ -7,7 +7,7 @@ import co.lex.domain.model.lexicon.analysis.Token;
  */
 public interface ProductionRule {
 
-    public Sentence evaluate(Token aToken);
+    public Sentence evaluate(Token aToken) throws SyntaxErrorException;
 
     public String name();
 

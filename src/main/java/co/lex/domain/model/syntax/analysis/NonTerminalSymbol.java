@@ -14,8 +14,8 @@ public class NonTerminalSymbol implements Symbol, ProductionRule{
     }
 
     @Override
-    public Sentence evaluate(Token aToken) {
-        Sentence s = linkedRuleGroup.evaluate(aToken);
+    public AnalysisTree evaluate(Token aToken) {
+        AnalysisTree s = linkedRuleGroup.evaluate(aToken);
         return s;
     }
 

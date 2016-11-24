@@ -26,52 +26,82 @@ public class Rule implements ProductionRule{
     }
 
     public Rule(RuleGroup parentRule, List<Symbol> symbols){
+
         this.parentRule = parentRule;
         this.symbols = symbols;
+
     }
 
     public List<Symbol> symbols(){
         return this.symbols;
     }
 
+    public void setParent(RuleGroup parentRule){
+
+        if(parentRule == null) throw new IllegalArgumentException("Parent rule can not be null");
+        this.parentRule = parentRule;
+
+    }
+
     public String name(){
         return parentRule.name();
     }
 
-    public Sentence evaluate(Token aToken){
+    public AnalysisTree evaluate(Token aToken){
+
+        //System.out.print("\n...................................."+this.name()+"...............................\n");
+
         Token previousToken = aToken.previousToken();
         Token currentToken = aToken;
-        Token endToken = null;
-        List<Sentence> sentences = new ArrayList<>();
+        Token rightmostVisitedToken = aToken;
+        Token endToken = aToken;
+        List<AnalysisTree> children = new ArrayList<>();
 
         for (Symbol s : this.symbols) {
 
-            //SI LA CADENA DE TOKENS TERMINA ANTES DE ACABAR LA COMPROBACION DE LA REGLA
-            //SE RETORNA UN OBJETC DE TIPO SENTENCE CON INFORMACION SOBRE EL ULTIMO TOKEN VALIDO
             if(currentToken == null){
-                Sentence errorSentence = Sentence.errorSentence(previousToken);
-                errorSentence.setSubSentences(sentences);
-                return errorSentence;
+
+                AnalysisTree emptyTree = AnalysisTree.emptyTree(previousToken, null);
+                emptyTree.addChildren(children);
+                //System.out.print("\n...................................."+this.name()+"...............................\n");
+                //System.out.print("\n"+rightmostVisitedToken+"\n");
+                return emptyTree;
+
             }
 
             previousToken = currentToken.previousToken();
-            Sentence ts = s.evaluate(currentToken);
+            AnalysisTree tempTree = s.evaluate(currentToken);
 
-            if (ts.length() > 0){
-                currentToken = ts.endToken().nextToken();
-                endToken = ts.endToken();
-                if (ts.length() > 1){
-                    sentences.add(ts);
-                }
+            if(tempTree.rightmostVisitedToken() == null){
+                rightmostVisitedToken = null;
+            }
+
+            if(rightmostVisitedToken != null)
+                if (rightmostVisitedToken.position() < tempTree.rightmostVisitedTokenPosition())
+                    rightmostVisitedToken = tempTree.rightmostVisitedToken();
+
+            if (tempTree.length() > 0){
+
+                endToken = tempTree.endToken();
+                currentToken = endToken.nextToken();
+
+                if (tempTree.length() > 1) children.add(tempTree);
+
             }
             else{
-                Sentence errorSentence = Sentence.errorSentence(ts.lastValidToken()); //TODO REVISAR
-                return errorSentence;
+                AnalysisTree emptyTree = AnalysisTree.emptyTree(tempTree.lastValidToken(), rightmostVisitedToken);
+                //System.out.print("\n"+rightmostVisitedToken+"\n");
+                //System.out.print("\n...................................."+this.name()+"...............................\n");
+                return emptyTree;
             }
         }
-        Sentence s = new Sentence(aToken, endToken, this);
-        s.setSubSentences(sentences);
+
+        AnalysisTree s = new AnalysisTree(aToken, endToken, rightmostVisitedToken, this);
+        s.addChildren(children);
+       // System.out.print("\n"+rightmostVisitedToken+"\n");
+        //System.out.print("\n..................................."+this.name()+"...............................\n");
         return s;
+
     }
 
 }

@@ -32,54 +32,86 @@ public class RuleGroup implements ProductionRule{
     }
 
     public void setRules(List<Rule> rules){
+        if(rules == null) throw new IllegalArgumentException("Rule list cannot be null");
         this.rules = rules;
+        setParents();
     }
 
-    public Sentence evaluate(Token aToken) {
+    private void setParents(){
+        for (Rule r :
+                rules) {
+            r.setParent(this);
+        }
+    }
 
-        Token previousToken = aToken.previousToken();
-        Token currentToken = aToken;
+    public AnalysisTree evaluate(Token aToken) {
+
+        //System.out.print("\n-----------------------------------"+this.name()+"-------------------------------------\n");
+
         Token endToken = aToken;
-        Token lastValidToken = aToken;
-        Sentence childSentence = null;
+        Token lastValidToken = aToken.previousToken();
+        Token rightmostVisitedToken = aToken;
+        AnalysisTree largestTree = null;
         Boolean flag = false;
 
 
-        for (Rule r : this.rules) {
-            Token tempToken = aToken;
+        for (Rule currentRule : this.rules) {
 
-            Sentence ts = r.evaluate(tempToken);
-            System.out.print("\n-----------FROM RULEGROUP "+ this.name()+" LASTVALID TOKEN "+ts.lastValidToken()+"\n");
+            Token currentToken = aToken;
+            AnalysisTree tempTree = currentRule.evaluate(currentToken);
 
-            if(ts.length() > 0){
+            if(tempTree.rightmostVisitedToken() == null){
+                rightmostVisitedToken = null;
+            }
+            if(rightmostVisitedToken != null)
+                if (tempTree.rightmostVisitedTokenPosition() > rightmostVisitedToken.position())
+                    rightmostVisitedToken = tempTree.rightmostVisitedToken();
+
+
+            if(tempTree.length() > 0){
+
                 flag = true;
-                if(childSentence == null){
-                    childSentence = ts;
-                    endToken = ts.endToken();
-                }
-                else {
-                    if(childSentence.length() < ts.length()){
-                        childSentence = ts;
-                        endToken = ts.endToken();
+                if(largestTree == null){
+
+                    largestTree = tempTree;
+                    endToken = tempTree.endToken();
+
+                } else {
+
+                    if(largestTree.length() < tempTree.length()){
+                        largestTree = tempTree;
+                        endToken = tempTree.endToken();
+
                     }
                 }
-            } else{ //TODO Verificar
-                if(ts.lastValidToken() != null){
-                    if(lastValidToken.position() < ts.lastValidToken().position()){
-                        lastValidToken = ts.lastValidToken();
-                    }
-                }
+            } else {
+
+                if(lastValidToken == null)
+
+                    lastValidToken = tempTree.lastValidToken();
+
+                else
+
+                    if(tempTree.lastValidToken() != null)
+                        if(lastValidToken.position() < tempTree.lastValidTokenPosition())
+                            lastValidToken = tempTree.lastValidToken();
             }
         }
 
-        if(flag ){
-            Sentence s = new Sentence(aToken, endToken, this);
-            s.addSubsentence(childSentence);
-            return s; //TODO
+        if(flag){
+
+            AnalysisTree s = new AnalysisTree(aToken, endToken, rightmostVisitedToken, this);
+            s.addChild(largestTree);
+            return s;
+
         }
 
-        Sentence errorSentence = Sentence.errorSentence(lastValidToken);
-        return errorSentence;
+        AnalysisTree emptyTree;
+        emptyTree = AnalysisTree.emptyTree(lastValidToken, rightmostVisitedToken);
+        //System.out.print("\n"+rightmostVisitedToken+"\n");
+        //System.out.print("\n-----------------------------------"+this.name()+"-------------------------------------\n");
+        return emptyTree;
+
     }
 
 }

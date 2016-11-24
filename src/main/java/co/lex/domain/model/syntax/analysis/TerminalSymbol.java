@@ -6,6 +6,7 @@ import co.lex.domain.model.lexicon.analysis.TokenType;
 /**
  * Created by jotauribe on 13/11/16.
  */
+
 public class TerminalSymbol implements Symbol, ProductionRule{
 
     private TokenType tokenType;
@@ -15,20 +16,24 @@ public class TerminalSymbol implements Symbol, ProductionRule{
     }
 
     private void setTokenType(TokenType aTokenType){
+
         if (aTokenType == null) throw new IllegalArgumentException("TokenType can not be null");
         this.tokenType = aTokenType;
-    }
 
-    @Override
-    public Sentence evaluate(Token aToken) {
-        //System.out.print("\nFROM TERMINAL SYMBOL "+aToken+"\n");
-        //System.out.print("\nFROM TERMINAL SYMBOL "+this.tokenType.name()+" = "+aToken.type().equals(this.tokenType.name())+"\n");
-        if(aToken.type().equals(this.tokenType.name())) return new Sentence(aToken, aToken, this);
-        return Sentence.errorSentence(aToken.previousToken());
     }
 
     @Override
     public String name() {
         return tokenType.name();
+    }
+
+    @Override
+    public AnalysisTree evaluate(Token aToken) {
+
+        if(aToken.type().equals(this.tokenType.name()))
+            return new AnalysisTree(aToken, aToken, aToken, this);
+        else
+            return AnalysisTree.emptyTree(aToken.previousToken(), aToken);
+
     }
 }

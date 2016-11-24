@@ -7,7 +7,7 @@ import co.lex.domain.model.lexicon.analysis.Token;
  */
 public interface Symbol {
 
-    public Sentence evaluate(Token aToken);
+    public AnalysisTree evaluate(Token aToken);
 
 
 

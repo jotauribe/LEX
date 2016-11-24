@@ -2,7 +2,6 @@ package co.lex.domain.model.syntax.analysis;
 
 import co.lex.domain.model.lexicon.analysis.Token;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +44,7 @@ public class SyntaxAnalyzer {
 
     }
 
-    public Sentence parse(List<Token> aTokenList){
+    public AnalysisTree parse(List<Token> aTokenList){
 
         Token currentToken = aTokenList.get(0);
 
@@ -56,7 +55,7 @@ public class SyntaxAnalyzer {
 
             return start.evaluate(currentToken);
         }
-        else return new Sentence();
+        else return new AnalysisTree();
     }
 
 }

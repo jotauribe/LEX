@@ -8,13 +8,13 @@ import java.util.regex.Pattern;
 /**
  * Created by jotauribe on 10/11/16.
  */
-public class Analyzer {
+public class LexicalAnalyzer {
 
     private List<TokenType> tokenTypes;
 
     private List<Token> latestGeneratedTokens;
 
-    public Analyzer(){
+    public LexicalAnalyzer(){
 
         this.tokenTypes = BreakerCriteriaProvider.tokenTypes();
         this.latestGeneratedTokens = new ArrayList<>();

@@ -18,21 +18,21 @@ import static org.junit.Assert.assertTrue;
  */
 
 @RunWith(Parameterized.class)
-public class AnalyzerTest {
+public class LexicalAnalyzerTest {
 
     private String suppliedString;
 
     private List<Token> expectedTokens;
 
-    public AnalyzerTest(List<Token> expectedTokens, String aSuppliedString){
+    public LexicalAnalyzerTest(List<Token> expectedTokens, String aSuppliedString){
         this.expectedTokens = expectedTokens;
         this.suppliedString = aSuppliedString;
     }
 
     @Test
     public void parse_GivenACompletelyValidStringToAnalyze_ReturnATokenArrayWithSizeLongerThanZero() throws Exception {
-        Analyzer analyzer = new Analyzer();
-        ArrayList<Token> tokenArrayList = (ArrayList<Token>) analyzer.tokenize(this.suppliedString);
+        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer();
+        ArrayList<Token> tokenArrayList = (ArrayList<Token>) lexicalAnalyzer.tokenize(this.suppliedString);
 
         for (int i = 0; i < expectedTokens.size(); i++) {
             Token t = expectedTokens.get(i);
@@ -44,8 +44,8 @@ public class AnalyzerTest {
 
     @Test
     public void linkTokens_GivenATokenListGeneratedFromAnalyzer_AProperlyLinkedTokenList(){
-        Analyzer analyzer = new Analyzer();
-        ArrayList<Token> tokenArrayList = (ArrayList<Token>) analyzer.tokenize(this.suppliedString);
+        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer();
+        ArrayList<Token> tokenArrayList = (ArrayList<Token>) lexicalAnalyzer.tokenize(this.suppliedString);
 
         for(int i = 0; i < tokenArrayList.size()-1; i++){
             assertEquals(tokenArrayList.get(i+1), tokenArrayList.get(i).nextToken());
@@ -59,8 +59,8 @@ public class AnalyzerTest {
 
     @Test
     public void position(){
-        Analyzer analyzer = new Analyzer();
-        ArrayList<Token> tokenArrayList = (ArrayList<Token>) analyzer.tokenize(this.suppliedString);
+        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer();
+        ArrayList<Token> tokenArrayList = (ArrayList<Token>) lexicalAnalyzer.tokenize(this.suppliedString);
 
         for(int i = 1;i < tokenArrayList.size()-1; i++){
             assertTrue(tokenArrayList.get(i).position() < tokenArrayList.get(i).nextToken().position());
@@ -73,8 +73,8 @@ public class AnalyzerTest {
 
     @Test
     public void normalizedPosition(){
-        Analyzer analyzer = new Analyzer();
-        ArrayList<Token> tokenArrayList = (ArrayList<Token>) analyzer.tokenize(this.suppliedString);
+        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer();
+        ArrayList<Token> tokenArrayList = (ArrayList<Token>) lexicalAnalyzer.tokenize(this.suppliedString);
 
         for(int i = 1;i < tokenArrayList.size()-1; i++){
             assertTrue(tokenArrayList.get(i).position() < tokenArrayList.get(i).nextToken().position());
@@ -135,7 +135,7 @@ public class AnalyzerTest {
         expected4.add(new Token(TokenType.IDENTIFIER, "identificador"));
         expected4.add(new Token(TokenType.RW_CONTROLSTRUCTURE_ITERATIVE_WHILE_START, "mientras"));
         expected4.add(new Token(TokenType.IDENTIFIER, "identificadormientras"));
-        expected4.add(new Token(TokenType.RW_CONTROLSTRUCTURE_ITERATIVE_FOR, "para"));
+        expected4.add(new Token(TokenType.RW_CONTROLSTRUCTURE_ITERATIVE_FOR_START, "para"));
         expected4.add(new Token(TokenType.VALUE_STRING, "\"cadena cadena\""));
 
         String suppliedString4 = "identificador mientras \n identificadormientras para\"cadena cadena\"";

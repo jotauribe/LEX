@@ -9,6 +9,8 @@ public enum TokenType {
 
     //ASCENDANTLY ORDERED BY PRIORITY
 
+    ERROR_INVALID_CHARACTER("(#|\\?|%|\\^|~|@)", 0),
+
     WHITESPACE("[ \t\f\r\n]+", TokenType.DEFAULT_PRIORITY_INDEX),
 
     END_OF_STATEMENT(";", TokenType.DEFAULT_PRIORITY_INDEX),
@@ -29,7 +31,7 @@ public enum TokenType {
 
     VALUE_BOOLEAN_FALSE("Falso", TokenType.MAX_PRIORITY_INDEX),
 
-    MATH_OPERATOR("(\\+|-|\\*|\\\\)", TokenType.DEFAULT_PRIORITY_INDEX),
+    MATH_OPERATOR("(\\+|-|\\*|/)", TokenType.DEFAULT_PRIORITY_INDEX),
 
     ASSIGNMENT_OPERATOR("=", TokenType.DEFAULT_PRIORITY_INDEX),
 
@@ -55,7 +57,7 @@ public enum TokenType {
 
     RW_DATATYPE_REAL("real", TokenType.MAX_PRIORITY_INDEX),
 
-    RW_DATATYPE_BOOLEAN("logico", TokenType.MAX_PRIORITY_INDEX),
+    RW_DATATYPE_BOOLEAN("Logico", TokenType.MAX_PRIORITY_INDEX),
 
     //CONTROL STRUCTURES TOKEN TYPES
 

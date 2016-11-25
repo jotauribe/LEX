@@ -85,7 +85,7 @@ public class Rule implements ProductionRule{
                 endToken = tempTree.endToken();
                 currentToken = endToken.nextToken();
 
-                if (tempTree.length() > 1) children.add(tempTree);
+                if (tempTree.length() > 0) children.add(tempTree);
 
             }
             else{

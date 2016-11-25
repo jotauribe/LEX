@@ -100,9 +100,9 @@ public class RuleGroup implements ProductionRule{
 
         if(flag){
 
-            AnalysisTree s = new AnalysisTree(aToken, endToken, rightmostVisitedToken, this);
-            s.addChild(largestTree);
-            return s;
+            AnalysisTree t = new AnalysisTree(aToken, endToken, rightmostVisitedToken, this);
+            t.addChild(largestTree);
+            return t;
 
         }
 

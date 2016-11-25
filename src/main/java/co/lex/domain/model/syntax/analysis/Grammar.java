@@ -144,9 +144,9 @@ public class Grammar {
         //--------------------------------------------------------------------------------------------------------------
         //                                                      R21
         List<Symbol> S21 = new ArrayList<>();
-        S21.add(new NonTerminalSymbol(rules.get(3))); //VARIABLE
+        S21.add(new NonTerminalSymbol(rules.get(3)));  //VARIABLE
         S21.add(new TerminalSymbol(TokenType.MATH_OPERATOR));
-        S21.add(new NonTerminalSymbol(rules.get(1))); //EXPRESSION
+        S21.add(new NonTerminalSymbol(rules.get(1)));  //EXPRESSION
         Rule R21 = new Rule(S21);
         //--------------------------------------------------------------------------------------------------------------
         //                                                      R22
@@ -871,6 +871,7 @@ public class Grammar {
         //TODO                                  R207: <BLOCK> = <DO-WHILE>
         //                                      R208: <BLOCK> = <WRITE>
         //                                      R209: <BLOCK> = <READ>
+        //                                      R2010: <BLOCK> = <FUNCION-CALL>
         //
         //--------------------------------------------------------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -907,7 +908,7 @@ public class Grammar {
         //--------------------------------------------------------------------------------------------------------------
         //                                                    R207
         List<Symbol> S207 = new ArrayList<>();
-        S207.add(new NonTerminalSymbol(rules.get(30))); //DO-WHILE TODO ACTUALIZAR ESTO
+        S207.add(new NonTerminalSymbol(rules.get(30))); //FUNCTION
         Rule R207 = new Rule(S207);
         //--------------------------------------------------------------------------------------------------------------
         //                                                    R208
@@ -919,6 +920,11 @@ public class Grammar {
         List<Symbol> S209 = new ArrayList<>();
         S209.add(new NonTerminalSymbol(rules.get(37))); //READ
         Rule R209 = new Rule(S209);
+        //--------------------------------------------------------------------------------------------------------------
+        //                                                   R2010
+        List<Symbol> S2010 = new ArrayList<>();
+        S2010.add(new NonTerminalSymbol(rules.get(34))); //FUNCTION-CALL
+        Rule R2010 = new Rule(S2010);
         //--------------------------------------------------------------------------------------------------------------
         //CREANDO GRUPO DE REGLAS
         //
@@ -932,6 +938,7 @@ public class Grammar {
         LR20.add(R207);
         LR20.add(R208);
         LR20.add(R209);
+        LR20.add(R2010);
         RuleGroup RG20 = rules.get(19);
         RG20.setRules(LR20);
         //

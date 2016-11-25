@@ -67,6 +67,10 @@ public class AnalysisTree {
         return acceptanceRule;
     }
 
+    public String acceptanceRuleName() {
+        return acceptanceRule.name();
+    }
+
     private void setAcceptanceRule(ProductionRule acceptanceRule) {
         if(acceptanceRule == null)
             throw new IllegalArgumentException("Acceptance rule can not be null");
@@ -156,6 +160,18 @@ public class AnalysisTree {
         return rightmostVisitedTokenPosition();
     }
 
+    public Token rightmostValidToken(){
+        int position = rightmostValidTokenPosition();
+        Token t = endToken();
+        while(t != null){
+            if(t.position() == position){
+                break;
+            }
+            t = t.nextToken();
+        }
+        return t;
+    }
+
     private int goToEnd(){
         Token tempToken = endToken;
         int i = 0;
@@ -165,5 +181,9 @@ public class AnalysisTree {
             tempToken = tempToken.nextToken();
         }
         return i;
+    }
+
+    public void print(){
+
     }
 }

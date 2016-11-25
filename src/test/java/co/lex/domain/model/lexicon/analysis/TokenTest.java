@@ -16,9 +16,9 @@ public class TokenTest {
 
     private TokenType tokenType;
 
-    private String word;
+    private Word word;
 
-    public TokenTest(TokenType aTokenType, String aString){
+    public TokenTest(TokenType aTokenType, Word aString){
         this.tokenType = aTokenType;
         this.word = aString;
     }
@@ -31,11 +31,11 @@ public class TokenTest {
     @Parameters
     public static Iterable<Object[]> parameters(){
         List<Object[]> parameters = new ArrayList<>();
-        parameters.add(new Object[]{TokenType.END_OF_STATEMENT, "aString_1234_;"});
-        parameters.add(new Object[]{TokenType.END_OF_STATEMENT, "      ;"});
-        parameters.add(new Object[]{TokenType.END_OF_STATEMENT, "aString_1234_"});
-        parameters.add(new Object[]{TokenType.END_OF_STATEMENT, "    "});
-        parameters.add(new Object[]{TokenType.END_OF_STATEMENT, " ;"});
+        parameters.add(new Object[]{TokenType.END_OF_STATEMENT, new Word("aString_1234_;", 0, 10)});
+        parameters.add(new Object[]{TokenType.END_OF_STATEMENT, new Word("      ;", 10, 10)});
+        parameters.add(new Object[]{TokenType.END_OF_STATEMENT, new Word("aString_1234_", 10, 40)});
+        parameters.add(new Object[]{TokenType.END_OF_STATEMENT, new Word("    ", 2, 10)});
+        parameters.add(new Object[]{TokenType.END_OF_STATEMENT, new Word(" ;", 0, 9)});
         return parameters;
     }
 

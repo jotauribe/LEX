@@ -10,29 +10,28 @@ public class Token {
 
     private TokenType tokenType;
 
-    private String word;
+    private Word word;
 
     private int position;
-
-    private int normalizedPosition;
 
     private Token nextToken;
 
     private Token previousToken;
 
-    public Token(TokenType aTokenType, String aAllowedWord){
+    public Token(TokenType aTokenType, Word aWord){
         this.setTokenType(aTokenType);
-        this.setWord(aAllowedWord);
+        this.setWord(aWord);
 
     }
 
-    private void setWord(String aAllowedWord){
-        Matcher m = getMatcher(aAllowedWord);
-        if( m.find() && (m.group(0).length() == aAllowedWord.length()) ){
-            this.word = aAllowedWord;
+    private void setWord(Word aWord){
+        String wordString = aWord.toString();
+        Matcher m = getMatcher(wordString);
+        if( m.find() && (m.group(0).length() == wordString.length()) ){
+            this.word = aWord;
         }
         else{
-            throw new IllegalArgumentException("Not allowed word provided. Expected: "+tokenType.name()+". Provided: "+aAllowedWord);
+            throw new IllegalArgumentException("Not allowed word provided. Expected: "+tokenType.name()+". Provided: "+wordString);
         }
     }
 
@@ -49,7 +48,7 @@ public class Token {
     }
 
     public String word(){
-        return this.word;
+        return word.toString();
     }
 
     public String type(){
@@ -68,12 +67,16 @@ public class Token {
         return this.position;
     }
 
-    public int normalizedPosition(){
-        return this.normalizedPosition;
-    }
-
     public Token previousToken(){
         return this.previousToken;
+    }
+
+    public int startLocation(){
+        return word.start();
+    }
+
+    public int endLocation(){
+        return word.end();
     }
 
     public void setNextToken(Token aToken){
@@ -91,15 +94,6 @@ public class Token {
             }
         }
         this.position = aPosition;
-    }
-
-    public void setNormalizedPosition(int aPosition) {
-        if (this.previousToken != null) {
-            if (aPosition <= this.previousToken().normalizedPosition()) {
-                throw new IllegalArgumentException("An illegal position was provided. Position can not be smaller than previous Token position");
-            }
-        }
-        this.normalizedPosition = aPosition;
     }
 
     @Override

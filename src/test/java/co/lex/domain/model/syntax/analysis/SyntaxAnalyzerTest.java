@@ -61,12 +61,20 @@ public class SyntaxAnalyzerTest {
         SyntaxAnalyzer sa = new SyntaxAnalyzer();
         List<Token> t = a.tokenize(suppliedString);
         AnalysisTree s = sa.parse(t);
-        System.out.print("\nS.SENTENCE = "+s.startToken()+" RightmostVisited POSITION: "+s.rightmostVisitedTokenPosition());
-        System.out.print("\nS.SENTENCE = "+s.startToken()+" RightmostValid POSITION: "+s.rightmostValidTokenPosition());
-        System.out.print("\nS.SENTENCE = "+s.startToken()+" ENDTOKEN : "+s.endToken());
-        System.out.print("\nS.SENTENCE = "+s.startToken()+" LASTVALIDTOKEN : "+s.lastValidToken());
-        System.out.print("\nS.SENTENCE = "+s.startToken()+" RIGHTMOST : "+s.rightmostVisitedToken());
+        //System.out.print("\nS.SENTENCE = "+s.startToken()+" RightmostVisited POSITION: "+s.rightmostVisitedTokenPosition());
+        //System.out.print("\nS.SENTENCE = "+s.startToken()+" RightmostValid POSITION: "+s.rightmostValidTokenPosition());
+        //System.out.print("\nS.SENTENCE = "+s.startToken()+" ENDTOKEN : "+s.endToken());
+        //System.out.print("\nS.SENTENCE = "+s.startToken()+" LASTVALIDTOKEN : "+s.lastValidToken());
+        //System.out.print("\nS.SENTENCE = "+s.startToken()+" RIGHTMOST : "+s.rightmostVisitedToken());
         assertEquals(rightmostValidTokenPosition, s.rightmostValidTokenPosition());
+    }
+
+    @Test
+    public void test(){
+        SyntaxAnalyzer sa = new SyntaxAnalyzer();
+        AnalysisTree t = sa.evaluate(suppliedString).syntaxAnalysisTree();
+        System.out.print("ARBOL: "+t.startToken());
+        assertEquals(rightmostValidTokenPosition, t.rightmostValidTokenPosition());
     }
 
     @Parameterized.Parameters
@@ -117,6 +125,8 @@ public class SyntaxAnalyzerTest {
         parameters.add(new Object[]{"mientras a < b : cadena a = \"cadena\" Subrutina entero misubrutina (cadena a, entero b) a = 0 FinSubrutina FinMientras", 24, 24, 24});  //T39
         parameters.add(new Object[]{"mientras a < b : cadena a = \"cadena\" Para (entero a = 6 a < b a = 7 + b): a = 0 FinPara FinMientras", 30, 30, 30});  //T40
         parameters.add(new Object[]{"Leer a[34] Escribir \"cadena\"", 7, 7, 7});  //T41
+        parameters.add(new Object[]{"#?%~^@Leer a[34] Escribir \"cadena\" a = b / c b = a * b[9] / c", 22, 22, 22});  //T42
+        parameters.add(new Object[]{"#?%~^@Leer a[34] Escribir \"cadena\" a = b / c b = a * b[9] / c identificador(a, 89)", 28, 28, 28});  //T43
 
         return parameters;
     }

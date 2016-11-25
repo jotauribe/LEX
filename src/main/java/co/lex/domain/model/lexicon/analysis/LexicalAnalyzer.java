@@ -14,10 +14,17 @@ public class LexicalAnalyzer {
 
     private List<Token> latestGeneratedTokens;
 
+    private List<Token> errorList;
+
+    private int counter;
+
     public LexicalAnalyzer(){
 
         this.tokenTypes = BreakerCriteriaProvider.tokenTypes();
         this.latestGeneratedTokens = new ArrayList<>();
+        this.errorList = new ArrayList<>();
+        counter = 0;
+
     }
 
     /**
@@ -27,17 +34,28 @@ public class LexicalAnalyzer {
      */
     public List<Token> tokenize(String aString){
 
+        int sl = aString.length();
         latestGeneratedTokens.clear();
+        counter = 0;
 
         String tempString = aString;
         int matcherStart = 0;
         while (tempString.length()>0){
-            tempString = nextMatch(tempString);
+            tempString = new String(nextMatch(tempString));
+            int tl = tempString.length();
+            counter = sl - tl;
         }
 
         this.linkTokens();
 
         return latestGeneratedTokens;
+    }
+
+    public LexicalAnalysisReport evaluate(String aString){
+        List<Token> linkedTokenList = tokenize(aString);
+        List<Token> errorList = this.errorList;
+        LexicalAnalysisReport lexicalAnalysisReport = new LexicalAnalysisReport(linkedTokenList, errorList);
+        return lexicalAnalysisReport;
     }
 
     /**
@@ -49,13 +67,12 @@ public class LexicalAnalyzer {
         String tempString = aString;
         String matchedString = "";
         TokenType matchedTokenType = this.tokenTypes.get(0);
-        Boolean errorFlag = true; // For Error Handling
+        int wordStart = 0, wordEnd = 0;
 
         for(TokenType currentTokenType: tokenTypes){
             Pattern currentPattern = currentTokenType.compiledPattern();
             Matcher m = currentPattern.matcher(tempString);
             if(m.lookingAt()){
-                errorFlag = false;
                 String tempMatchedString = m.group();
                 if( tempMatchedString.length() >= matchedString.length()
                         && currentTokenType.priorityIndex() >= matchedTokenType.priorityIndex()){
@@ -65,8 +82,15 @@ public class LexicalAnalyzer {
             }
         }
 
-        latestGeneratedTokens.add( new Token(matchedTokenType, matchedString) );
+        wordStart = counter+1;
+        wordEnd = matchedString.length() + counter;
+        Word matchedWord = new Word(matchedString, wordStart, wordEnd);
 
+        Token newToken = new Token(matchedTokenType, matchedWord);
+        if(newToken.type().equals(TokenType.ERROR_INVALID_CHARACTER.name()))
+            errorList.add(newToken);
+        else
+            latestGeneratedTokens.add( newToken );
         return aString.substring(matchedString.length());
     }
 

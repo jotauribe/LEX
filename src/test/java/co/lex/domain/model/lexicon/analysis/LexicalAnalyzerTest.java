@@ -91,9 +91,9 @@ public class LexicalAnalyzerTest {
 
         //1st Set
         List<Token> expected1 = new ArrayList<>();
-        expected1.add(new Token(TokenType.RW_DATATYPE_INTEGER, "entero"));
-        expected1.add(new Token(TokenType.MATH_OPERATOR, "-"));
-        expected1.add(new Token(TokenType.VALUE_REAL, "23.78"));
+        expected1.add(new Token(TokenType.RW_DATATYPE_INTEGER, new Word("entero", 0, 5)));
+        expected1.add(new Token(TokenType.MATH_OPERATOR, new Word("-", 6, 6)));
+        expected1.add(new Token(TokenType.VALUE_REAL, new Word("23.78", 7, 12)));
         
         String suppliedString1 = "entero  -23.78";
         
@@ -104,9 +104,9 @@ public class LexicalAnalyzerTest {
 
         //2nd Set
         List<Token> expected2 = new ArrayList<>();
-        expected2.add(new Token(TokenType.IDENTIFIER, "identificador"));
-        expected2.add(new Token(TokenType.MATH_OPERATOR, "-"));
-        expected2.add(new Token(TokenType.VALUE_STRING, "\"cadena cadena\""));
+        expected2.add(new Token(TokenType.IDENTIFIER, new Word("identificador", 0, 13)));
+        expected2.add(new Token(TokenType.MATH_OPERATOR, new Word("-", 0, 6)));
+        expected2.add(new Token(TokenType.VALUE_STRING, new Word("\"cadena cadena\"", 0 , 6)));
 
         String suppliedString2 = "identificador  -  \"cadena cadena\"";
 
@@ -117,10 +117,10 @@ public class LexicalAnalyzerTest {
 
         //3nd Set
         List<Token> expected3 = new ArrayList<>();
-        expected3.add(new Token(TokenType.IDENTIFIER, "identificador"));
-        expected3.add(new Token(TokenType.GROUPER_BRACKET_LEFT, "["));
-        expected3.add(new Token(TokenType.MATH_OPERATOR, "-"));
-        expected3.add(new Token(TokenType.VALUE_STRING, "\"cadena cadena\""));
+        expected3.add(new Token(TokenType.IDENTIFIER, new Word("identificador", 0 , 8)));
+        expected3.add(new Token(TokenType.GROUPER_BRACKET_LEFT, new Word("[", 0 , 8)));
+        expected3.add(new Token(TokenType.MATH_OPERATOR, new Word("-", 0 , 8)));
+        expected3.add(new Token(TokenType.VALUE_STRING, new Word("\"cadena cadena\"", 0 , 9) ));
 
         String suppliedString3 = "identificador[ \n -  \"cadena cadena\"";
 
@@ -132,13 +132,13 @@ public class LexicalAnalyzerTest {
 
         //4nd Set
         List<Token> expected4 = new ArrayList<>();
-        expected4.add(new Token(TokenType.IDENTIFIER, "identificador"));
-        expected4.add(new Token(TokenType.RW_CONTROLSTRUCTURE_ITERATIVE_WHILE_START, "mientras"));
-        expected4.add(new Token(TokenType.IDENTIFIER, "identificadormientras"));
-        expected4.add(new Token(TokenType.RW_CONTROLSTRUCTURE_ITERATIVE_FOR_START, "para"));
-        expected4.add(new Token(TokenType.VALUE_STRING, "\"cadena cadena\""));
+        expected4.add(new Token(TokenType.IDENTIFIER, new Word("identificador", 0, 10) ));
+        expected4.add(new Token(TokenType.RW_CONTROLSTRUCTURE_ITERATIVE_WHILE_START, new Word("mientras", 0 , 10)));
+        expected4.add(new Token(TokenType.IDENTIFIER, new Word("identificadormientras", 9, 20) ));
+        expected4.add(new Token(TokenType.RW_CONTROLSTRUCTURE_ITERATIVE_FOR_START, new Word("Para", 21, 30)));
+        expected4.add(new Token(TokenType.VALUE_STRING, new Word("\"cadena cadena\"", 31, 40) ));
 
-        String suppliedString4 = "identificador mientras \n identificadormientras para\"cadena cadena\"";
+        String suppliedString4 = "identificador mientras \n identificadormientras Para\"cadena cadena\"";
 
         Object[] objectsSet4 = new Object[]{expected4, suppliedString4};
         parameters.add(objectsSet4);

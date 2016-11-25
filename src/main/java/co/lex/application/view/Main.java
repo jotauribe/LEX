@@ -45,18 +45,17 @@ public class Main extends JDialog {
         evaluateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                runTextArea.setText(null);
+
                 String codeString = codeTextArea.getText();
+                runTextArea.setText("");
                 SyntaxAnalysisReport syntaxAnalysisReport = syntaxAnalyzer.evaluate(codeString);
                 if(syntaxAnalysisReport.isEverythingOK()){
-                    runTextArea.setText("");
                     runTextArea.append("BUILD SUCCESSFULL");
                 }
                 else {
                     List<Token> lexicalErrors = syntaxAnalysisReport.lexicalErrorList();
                     runTextArea.setText(null);
-                    for (Token t :
-                            lexicalErrors) {
+                    for (Token t : lexicalErrors) {
                         String subString = codeString.substring(0, t.endLocation());
                         //System.out.print("MAIN:   "+t.startLocation()+"   "+t.endLocation());
                         runTextArea.append("\nLexical Error in line "+countLines(subString));
@@ -64,10 +63,20 @@ public class Main extends JDialog {
                     AnalysisTree analysisTree = syntaxAnalysisReport.syntaxAnalysisTree();
                     Token t = analysisTree.rightmostValidToken();
                     System.out.print(t);
-                    String subString = codeString.substring(0, t.endLocation());
-                    runTextArea.append("\nSyntax Error in line "+countLines(subString));
+                    if(t != null){
+                        String subString = codeString.substring(0, t.endLocation());
+                        runTextArea.append("\nSyntax Error in line "+countLines(subString));
+                    }
+                    else
+                        runTextArea.append("\nSyntax Error");
                 }
 
+            }
+        });
+        LimpiarBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                codeTextArea.setText("");
             }
         });
     }

@@ -47,6 +47,8 @@ public class SyntaxAnalysisReport {
     public Boolean isEverythingOK(){
         if(lexicalAnalysisReport.getErrorList().size() > 0)
             return false;
+        if (analysisTree.lastValidToken() == null)
+            return false;
         if(analysisTree.lastValidToken().nextToken() != null)
             return false;
         return true;

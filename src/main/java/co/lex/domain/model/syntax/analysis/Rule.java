@@ -49,8 +49,6 @@ public class Rule implements ProductionRule{
 
     public AnalysisTree evaluate(Token aToken){
 
-        //System.out.print("\n...................................."+this.name()+"...............................\n");
-
         Token previousToken = aToken.previousToken();
         Token currentToken = aToken;
         Token rightmostVisitedToken = aToken;
@@ -63,8 +61,6 @@ public class Rule implements ProductionRule{
 
                 AnalysisTree emptyTree = AnalysisTree.emptyTree(previousToken, null);
                 emptyTree.addChildren(children);
-                //System.out.print("\n...................................."+this.name()+"...............................\n");
-                //System.out.print("\n"+rightmostVisitedToken+"\n");
                 return emptyTree;
 
             }
@@ -90,16 +86,12 @@ public class Rule implements ProductionRule{
             }
             else{
                 AnalysisTree emptyTree = AnalysisTree.emptyTree(tempTree.lastValidToken(), rightmostVisitedToken);
-                //System.out.print("\n"+rightmostVisitedToken+"\n");
-                //System.out.print("\n...................................."+this.name()+"...............................\n");
                 return emptyTree;
             }
         }
 
         AnalysisTree s = new AnalysisTree(aToken, endToken, rightmostVisitedToken, this);
         s.addChildren(children);
-       // System.out.print("\n"+rightmostVisitedToken+"\n");
-        //System.out.print("\n..................................."+this.name()+"...............................\n");
         return s;
 
     }

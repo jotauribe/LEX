@@ -6,13 +6,12 @@ import co.lex.domain.model.syntax.analysis.SyntaxAnalysisReport;
 import co.lex.domain.model.syntax.analysis.SyntaxAnalyzer;
 
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
 import java.awt.event.*;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Main extends JDialog {
+public class TestView extends JDialog {
     private JPanel contentPane;
     private JButton evaluateBtn;
     private JTextArea runTextArea;
@@ -22,7 +21,7 @@ public class Main extends JDialog {
     private JButton buttonCancel;
     private SyntaxAnalyzer syntaxAnalyzer;
 
-    public Main() {
+    public TestView() {
         setContentPane(contentPane);
         setModal(true);
 
@@ -92,7 +91,7 @@ public class Main extends JDialog {
     }
 
     public static void main(String[] args) {
-        Main dialog = new Main();
+        TestView dialog = new TestView();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 /**
- * ESTRUCTURA DE UN GRUPO DE REGLAS
+ * RULE GROUP STRUCTURE
  *
  * <RULE-GROUP>   =   <RULE> | <RULE> | <RULE> ...
  */
@@ -45,8 +45,6 @@ public class RuleGroup implements ProductionRule{
     }
 
     public AnalysisTree evaluate(Token aToken) {
-
-        //System.out.print("\n-----------------------------------"+this.name()+"-------------------------------------\n");
 
         Token endToken = aToken;
         Token lastValidToken = aToken.previousToken();
@@ -108,8 +106,6 @@ public class RuleGroup implements ProductionRule{
 
         AnalysisTree emptyTree;
         emptyTree = AnalysisTree.emptyTree(lastValidToken, rightmostVisitedToken);
-        //System.out.print("\n"+rightmostVisitedToken+"\n");
-        //System.out.print("\n-----------------------------------"+this.name()+"-------------------------------------\n");
         return emptyTree;
 
     }

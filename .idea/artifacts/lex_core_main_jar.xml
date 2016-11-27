@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="lex-core_main:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/lex_core_main_jar</output-path>
+    <root id="archive" name="lex-core_main.jar">
+      <element id="module-output" name="lex-core_main" />
+    </root>
+  </artifact>
+</component>

@@ -184,7 +184,6 @@ public class Grammar {
         //
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -751,7 +750,7 @@ public class Grammar {
         S172.add(new NonTerminalSymbol(rules.get(15))); //CONDITION
         S172.add(new TerminalSymbol(TokenType.GROUPER_PARENTHESES_RIGHT));
         S172.add(new TerminalSymbol(TokenType.COLON));
-        S172.add(new NonTerminalSymbol(rules.get(0))); //STATEMENT TODO CORREGIR
+        S172.add(new NonTerminalSymbol(rules.get(18))); //STATEMENT TODO CORREGIR
         S172.add(new TerminalSymbol(TokenType.RW_CONTROLSTRUCTURE_CONDITIONAL_ELSE));
         S172.add(new NonTerminalSymbol(rules.get(18))); //STATEMENT TODO CORREGIR
         S172.add(new TerminalSymbol(TokenType.RW_CONTROLSTRUCTURE_CONDITIONAL_IF_END));
@@ -784,7 +783,9 @@ public class Grammar {
         //                                                      R181
         List<Symbol> S181 = new ArrayList<>();
         S181.add(new TerminalSymbol(TokenType.RW_CONTROLSTRUCTURE_ITERATIVE_WHILE_START));
+        S181.add(new TerminalSymbol(TokenType.GROUPER_PARENTHESES_LEFT));
         S181.add(new NonTerminalSymbol(rules.get(15))); //CONDITION
+        S181.add(new TerminalSymbol(TokenType.GROUPER_PARENTHESES_RIGHT));
         S181.add(new TerminalSymbol(TokenType.COLON)); //
         S181.add(new NonTerminalSymbol(rules.get(18))); //STATEMENT
         S181.add(new TerminalSymbol(TokenType.RW_CONTROLSTRUCTURE_ITERATIVE_WHILE_END));
@@ -796,14 +797,16 @@ public class Grammar {
         S182.add(new TerminalSymbol(TokenType.COLON)); //
         S182.add(new NonTerminalSymbol(rules.get(18))); //STATEMENT
         S182.add(new TerminalSymbol(TokenType.RW_CONTROLSTRUCTURE_ITERATIVE_DO_WHILE_CONDITION));
+        S182.add(new TerminalSymbol(TokenType.GROUPER_PARENTHESES_LEFT));
         S182.add(new NonTerminalSymbol(rules.get(15))); //CONDITION
+        S182.add(new TerminalSymbol(TokenType.GROUPER_PARENTHESES_RIGHT));
         Rule R182 = new Rule(S182);
         //--------------------------------------------------------------------------------------------------------------
         //CREANDO GRUPO DE REGLAS
         //
         List<Rule> LR18 = new ArrayList<>();
         LR18.add(R181);
-        LR18.add(R181);
+        LR18.add(R182);
         RuleGroup RG18 = rules.get(17);
         RG18.setRules(LR18);
         //
@@ -868,10 +871,11 @@ public class Grammar {
         //                                      R204: <BLOCK> = <SWITCH>
         //                                      R205: <BLOCK> = <FOR>
         //                                      R206: <BLOCK> = <WHILE>
-        //TODO                                  R207: <BLOCK> = <DO-WHILE>
+        //                                      R207: <BLOCK> = <DO-WHILE>
         //                                      R208: <BLOCK> = <WRITE>
         //                                      R209: <BLOCK> = <READ>
         //                                      R2010: <BLOCK> = <FUNCION-CALL>
+        //                                      R2011: <BLOCK> = <FUNCION-RETURN>
         //
         //--------------------------------------------------------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -926,6 +930,11 @@ public class Grammar {
         S2010.add(new NonTerminalSymbol(rules.get(34))); //FUNCTION-CALL
         Rule R2010 = new Rule(S2010);
         //--------------------------------------------------------------------------------------------------------------
+        //                                                   R2011
+        List<Symbol> S2011 = new ArrayList<>();
+        S2011.add(new NonTerminalSymbol(rules.get(33))); //FUNCTION-RETURN
+        Rule R2011 = new Rule(S2011);
+        //--------------------------------------------------------------------------------------------------------------
         //CREANDO GRUPO DE REGLAS
         //
         List<Rule> LR20 = new ArrayList<>();
@@ -939,6 +948,7 @@ public class Grammar {
         LR20.add(R208);
         LR20.add(R209);
         LR20.add(R2010);
+        LR20.add(R2011);
         RuleGroup RG20 = rules.get(19);
         RG20.setRules(LR20);
         //
